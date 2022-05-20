@@ -2,25 +2,22 @@ import React from 'react';
 
 import { Provider } from 'react-redux';
 import {
-    Navigate,
-    Route,
-    Routes
+  Navigate,
+  Route,
+  Routes,
 } from 'react-router-dom';
 
 import {
-    Box,
-    styled
+  Box,
+  styled,
 } from '@mui/material/index';
 
 import Search from './components/search-bar';
-import Tables from './components/table-box';
+import Table from './components/table/table';
 import store from './store/store';
 
 const ContainerWraper = styled(Box)({
-  width: 1232,
-  height: 820,
-  margin: 0,
-  padding: 0,
+  padding: '23px 78px',
 });
 
 function App() {
@@ -30,7 +27,7 @@ function App() {
       <Route path="/:page" element={
         <ContainerWraper >
           <Search />
-          <Tables />
+          <Table />
         </ContainerWraper>
       } />
     </Routes>

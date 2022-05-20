@@ -1,5 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import {
+  sortInfoType,
+  tableDataType,
+} from '../../store/types';
+
+interface Action<P> {
+    payload: P;
+}
+
 const tableDataSlice = createSlice({
     name: 'tableData',
     initialState: {
@@ -13,7 +22,13 @@ const tableDataSlice = createSlice({
         }
     },
     reducers: {
-        getTableData(state, action) {
+        /**
+         * Функция которая записывает в store данные для таблицы.
+         * @param state 
+         * @param action - данные типа tableDataType[]
+         * @returns 
+         */
+        setTableData(state, action: Action<tableDataType[]>) {
             return {
                 ...state,
                 allData: action.payload,
@@ -25,7 +40,13 @@ const tableDataSlice = createSlice({
                 }
             }
         },
-        setFilterData(state, action) {
+        /**
+         * Функция предназначена для фильтрации массива данных для таблицы.
+         * @param state 
+         * @param action - данные для фильтрации
+         * @returns 
+         */
+        setFilterData(state, action: Action<string>) {
             const filterData = state.allData.filter((d) =>
                 String(d.id).includes(action.payload)
                 || String(d.title).includes(action.payload)
@@ -41,7 +62,13 @@ const tableDataSlice = createSlice({
                 }
             }
         },
-        setPaginationCount(state, action) {
+        /**
+         * Функция которая задаёт активную страницу пагинации.
+         * @param state 
+         * @param action - номер страницы
+         * @returns 
+         */
+        setPaginationCount(state, action: Action<number>) {
             const startIndex = (action.payload - 1) * 10;
             return {
                 ...state,
@@ -52,13 +79,25 @@ const tableDataSlice = createSlice({
                 }
             }
         },
-        setLoading(state, action) {
+        /**
+         * Функция для записи состояния загрузки
+         * @param state 
+         * @param action - данные типа boolean
+         * @returns 
+         */
+        setLoading(state, action: Action<boolean>) {
             return {
                 ...state,
                 isLoading: action.payload
             }
         },
-        sortData(state, action) {
+        /**
+         * Функция для сортировки данных таблицы, по столбцу.
+         * @param state 
+         * @param action -данные типа sortInfoType(тип сортировки и название столбца)
+         * @returns 
+         */
+        sortData(state, action: Action<sortInfoType>) {
             const { direction, column } = action.payload;
 
             const sortData = [...state.filterData].sort((a, b) => {
@@ -82,7 +121,7 @@ const tableDataSlice = createSlice({
 })
 
 export const {
-    getTableData,
+    setTableData,
     setPaginationCount,
     setLoading,
     setFilterData,
